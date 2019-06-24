@@ -1,13 +1,14 @@
 package com.example.portfolioservice.models;
 
+
 public class Fund
 {
-    String fundNumber, fundName;
-    double presentNAV, originalNAV;
+    private String fundNumber, fundName;
+    private double presentNAV, originalNAV;
 
-    String invManager;
+    private String invManager;
 
-    double sAndPRating, moodysRating, profit;
+    private double sAndPRating, moodysRating, profit;
 
     public Fund()
     {

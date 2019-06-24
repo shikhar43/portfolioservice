@@ -5,9 +5,10 @@ import java.util.*;
 
 import com.example.portfolioservice.DAO.FundDAO;
 import com.example.portfolioservice.DAO.UserDAO;
-import com.example.portfolioservice.models.Fund;
-import com.example.portfolioservice.models.User;
-import com.example.portfolioservice.models.UserUpdate;
+import com.example.portfolioservice.models.*;
+import com.google.common.base.Optional;
+import org.immutables.mongo.repository.RepositorySetup;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,40 +16,61 @@ import org.springframework.stereotype.Service;
 @Service
 public class PortfolioService
 {
-    @Autowired
-    private FundDAO fundDAO;
+//    @Autowired
+//    private FundDAO fundDAO;
 
     @Autowired
-    private UserDAO userDAO;
+    UserDAO userDAO;
 
-    public Collection<Fund> getFunds()
+//    public Collection<Fund> getFunds()
+//    {
+//        return fundDAO.getFunds();
+//    }
+//    public List<ImmutableFund2> getAll(){
+//        return fundDAO.getAll();
+//    }
+
+
+
+
+//    public User createUser(User user)
+//    {
+//         userDAO.createUser(user);
+//         return user;
+//    }
+
+    public void createUser(User2 user)
     {
-        return fundDAO.getFunds();
+        userDAO.createUser(user);
     }
 
-    public Collection<User> getUser()
+    public ImmutableUserDBModel getUser(String id)
     {
-        return userDAO.getUsers();
+        return userDAO.getUser(id);
     }
 
-    public User createUser(User user)
+    public Optional<UserDBModel> update(User2 user)
     {
-         userDAO.createUser(user);
-         return user;
+        return userDAO.update(user);
     }
 
-    public Optional<User> getUserById(String id)
+    public Optional<UserDBModel> delete(String userId)
     {
-        return userDAO.getUserById(id);
+        return userDAO.delete(userId);
     }
 
-    public Optional<User> deleteUserById(String id)
-    {
-        return userDAO.deleteUserById(id);
-    }
-
-    public Optional<User> updateUserById(String userId, UserUpdate userUpdate)
-    {
-        return userDAO.updateUser(userId, userUpdate);
-    }
+//    public Optional<User> getUserById(String id)
+//    {
+//        return userDAO.getUserById(id);
+//    }
+//
+//    public Optional<User> deleteUserById(String id)
+//    {
+//        return userDAO.deleteUserById(id);
+//    }
+//
+//    public Optional<User> updateUserById(String userId, UserUpdate userUpdate)
+//    {
+//        return userDAO.updateUser(userId, userUpdate);
+//    }
 }
