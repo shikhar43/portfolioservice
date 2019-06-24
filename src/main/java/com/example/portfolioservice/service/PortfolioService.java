@@ -22,22 +22,7 @@ public class PortfolioService
     @Autowired
     UserDAO userDAO;
 
-//    public Collection<Fund> getFunds()
-//    {
-//        return fundDAO.getFunds();
-//    }
-//    public List<ImmutableFund2> getAll(){
-//        return fundDAO.getAll();
-//    }
 
-
-
-
-//    public User createUser(User user)
-//    {
-//         userDAO.createUser(user);
-//         return user;
-//    }
 
     public void createUser(User2 user)
     {
@@ -59,18 +44,14 @@ public class PortfolioService
         return userDAO.delete(userId);
     }
 
-//    public Optional<User> getUserById(String id)
-//    {
-//        return userDAO.getUserById(id);
-//    }
-//
-//    public Optional<User> deleteUserById(String id)
-//    {
-//        return userDAO.deleteUserById(id);
-//    }
-//
-//    public Optional<User> updateUserById(String userId, UserUpdate userUpdate)
-//    {
-//        return userDAO.updateUser(userId, userUpdate);
-//    }
+
+    public float getBalanceById(String userId)
+    {
+        return userDAO.getBalance(userId);
+    }
+
+    public void updateBalance(String userId, float balance)
+    {
+        userDAO.updateBalance(userId, balance);
+    }
 }

@@ -33,6 +33,7 @@ public class UserDAO
         UserDBModel userDB;
         userDB = ImmutableUserDBModel.builder()
                 .userId(user.userId())
+                .balance(user.balance())
                 .all_funds(user.all_funds().get()).build();
 
         repository.insert(userDB);
@@ -72,30 +73,30 @@ public class UserDAO
         return u;
     }
 
-//    public User createUser(User user)
-//    {
-//        userRepository.deleteAll();
-//       // userRepository.insert(user);
-//        return user;
-//    }
-//    public Optional<User> getUserById(String id)
-//    {
-//        //userRepository.deleteAll();
-//        return userRepository.findById(id);
-//    }
-//    public Optional<User> deleteUserById(String id)
-//    {
-//        //userRepository.deleteAll();
-//        Optional<User> user = userRepository.findById(id);
-//        user.ifPresent(u -> userRepository.delete(u));
-//        return user;
-//    }
-//
-//    public Optional<User> updateUser(String userId, UserUpdate userUpdate)
-//    {
-//        Optional<User> user = userRepository.findById(userId);
-//        user.ifPresent(u -> u.setAll_funds(userUpdate.getAll_funds()));
-//        user.ifPresent(u -> userRepository.save(u));
-//        return user;
-//    }
+    public float getBalance(String userId)
+    {
+        Optional<UserDBModel> user = repository.find(where.userId(userId)).fetchFirst().getUnchecked();
+        if(user.isPresent())
+        {
+            ImmutableUserDBModel userd =ImmutableUserDBModel.builder().from(user.get()).build();
+            return userd.balance();
+        }
+        return 0;
+    }
+
+    public void updateBalance(String userId, float balance)
+    {
+        Optional<UserDBModel> u = repository.find(where.userId(userId)).fetchFirst().getUnchecked();
+        if(u.isPresent())
+        {
+            UserDBModel updated_user = u.get();
+            repository.upsert(
+                    ImmutableUserDBModel.builder()
+                            .userId(u.get().userId())
+                            .all_funds(u.get().all_funds())
+                            .balance(balance)
+                            .build()
+            );
+        }
+    }
 }

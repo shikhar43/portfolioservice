@@ -27,13 +27,7 @@ public class PortfolioController
 
     @Autowired
     private PortfolioService portfolioService;
-//    @GET
-//    @Produces("application/json")
-//    @Path("/")
-//    public Collection<User> getf()
-//    {
-//        return portfolioService.getUser();
-//    }
+
     @GET
     @Produces("application/json")
     @Path("/{userId}")
@@ -41,13 +35,29 @@ public class PortfolioController
     {
         return portfolioService.getUser(userId);
     }
-    @POST
+
+//    @POST
+//    @Produces("application/json")
+//    @Path("/delete/{userId}")
+//    public void CreateUser(User2 user)
+//    {
+////        return portfolioService.delete(userId);
+//        portfolioService.createUser(user);
+//    }
+    @GET
     @Produces("application/json")
-    @Path("/delete/{userId}")
-    public void CreateUser(User2 user)
+    @Path("/getBalance/{userId}")
+    public float getBalanceById(@PathParam("userId") String userId)
     {
-//        return portfolioService.delete(userId);
-        portfolioService.createUser(user);
+        return portfolioService.getBalanceById(userId);
+
+    }
+    @PATCH
+    @Produces("application/json")
+    @Path("/update/{userId}/{balance}")
+    public void updateBalance(@PathParam("userId") String userId, @PathParam("balance") float balance)
+    {
+        portfolioService.updateBalance(userId, balance);
     }
     @DELETE
     @Produces("application/json")
@@ -63,23 +73,21 @@ public class PortfolioController
     {
         return portfolioService.update(user);
     }
-//    private User insert(User user)
-//    {
-//        //Fund Fund = restTemplate.getForObject("http://ratings-data-service/ratingsdata/user/" + userId, Fund.class);
-//        List<Fund> funds = Arrays.asList(
-//                new Fund("1", "number1","onemoremanager", 3.45, 1.35, 2.01),
-//                new Fund("2", "number2","onemoremanager", 4.56, 2.33, 1.98),
-//                new Fund("3", "number3","onemoremanager", 4.56, 2.33, 1.98)
-//
-//        );
-//        links l1 = new links();
-//        ArrayList<Fund> new_funds = new ArrayList<>();
-//
 
-//        user.setAll_funds(new_funds);
-//        return null;
-//        //return portfolioService.createUser(user2);
-//    }
+    @POST
+    @Produces("application/json")
+    @Path("/addUser/{userId}/{balance}")
+    public void addUser(@PathParam("userId") String userId, @PathParam("balance") float balance)
+    {
+        List<Fund2> empty_funds = new ArrayList<>();
+        User2 user = ImmutableUser2.builder()
+                .userId(userId)
+                .all_funds(empty_funds)
+                .balance((float)(balance))
+                .build();
+        portfolioService.createUser(user);
+    }
+
     @GET
     @Produces("application/json")
     @Path("/getFunds/{userId}")
@@ -108,12 +116,7 @@ public class PortfolioController
                 .build();
         List<Fund2> funds = new ArrayList<>();
         funds.add(fun);
-//        List<Fund> funds = (Arrays.asList(
-//                new Fund("1", "number1","manager", 3.45, 1.35, 2.01),
-//                new Fund("2", "number2","anothermanager", 4.56, 2.33, 1.98),
-//                new Fund("3", "number3","onemoremanager", 4.56, 2.33, 1.98)
-//
-//        ));
+
         List<Fund2> newFunds = new ArrayList<>();
         funds.stream().map(fund -> {
 
@@ -124,7 +127,6 @@ public class PortfolioController
             float f1 = 4.2f;
             float profit = f1-(fund.originalNav().get());
             float profitPercent = ((profit)/(fund.originalNav().get())) * 100;
-          //  System.out.println(f1+" "+profit+" "+profitPercent);
             Fund2 fun2 = ImmutableFund2.builder()
                     .fundNumber(fund.fundNumber())
                     .fundName(fund.fundName())
@@ -140,24 +142,18 @@ public class PortfolioController
                     .build();
             newFunds.add(fun2);
             return fun2;
-//
+
         }).collect(Collectors.toList());
 
         User2 user = ImmutableUser2.builder()
                     .userId(userId)
                     .all_funds(newFunds)
+                    .balance((float)(10000))
                     .build();
 
         portfolioService.createUser(user);
 
-//
-//
-//        links l1 = new links();
-//        User user = new User();
-//        user.setUserid(userId);
-//        user = insert(user);
         return user.all_funds().get();
-
 
     }
 

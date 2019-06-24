@@ -17,5 +17,6 @@ import java.util.ArrayList;
 public interface User2
 {
     String userId();
+    float balance();
     Optional<List<Fund2>> all_funds();
 }
