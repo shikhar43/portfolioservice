@@ -28,6 +28,7 @@ public class PortfolioController
     @Autowired
     private PortfolioService portfolioService;
 
+    // get user details
     @GET
     @Produces("application/json")
     @Path("/{userId}")
@@ -36,14 +37,7 @@ public class PortfolioController
         return portfolioService.getUser(userId);
     }
 
-//    @POST
-//    @Produces("application/json")
-//    @Path("/delete/{userId}")
-//    public void CreateUser(User2 user)
-//    {
-////        return portfolioService.delete(userId);
-//        portfolioService.createUser(user);
-//    }
+    // get user balance
     @GET
     @Produces("application/json")
     @Path("/getBalance/{userId}")
@@ -59,6 +53,9 @@ public class PortfolioController
     {
         portfolioService.updateBalance(userId, balance);
     }
+
+
+    // delete user
     @DELETE
     @Produces("application/json")
     @Path("/delete/{userId}")
@@ -66,6 +63,9 @@ public class PortfolioController
     {
         return portfolioService.delete(userId);
     }
+
+
+    //update user
     @PATCH
     @Produces("application/json")
     @Path("/update/{userId}")
@@ -74,6 +74,9 @@ public class PortfolioController
         return portfolioService.update(user);
     }
 
+
+
+    //update user balance
     @POST
     @Produces("application/json")
     @Path("/addUser/{userId}/{balance}")
@@ -88,6 +91,8 @@ public class PortfolioController
         portfolioService.createUser(user);
     }
 
+
+    //get the funds of user. If user does not exist in DB add user.
     @GET
     @Produces("application/json")
     @Path("/getFunds/{userId}")
@@ -102,7 +107,7 @@ public class PortfolioController
             return u.all_funds();
 
         }
-
+        //
         //Fund Fund = restTemplate.getForObject("http://funds-service/user/" + userId, Fund.class);
         Fund2 fun = ImmutableFund2.builder()
                 .fundNumber("1")
@@ -121,7 +126,7 @@ public class PortfolioController
         funds.stream().map(fund -> {
 
             //double f1 = restTemplate.getForObject(l1.getLink1(), Double.class);
-
+            //
             // Fund fun2 = restTemplate.getForObject("http://localhost:8082/movies/1", Fund.class);
             //double f2 = restTemplate.getForObject(l1.getLink2(), Double.class);
             float f1 = 4.2f;

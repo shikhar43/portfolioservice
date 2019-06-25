@@ -16,8 +16,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class PortfolioService
 {
-//    @Autowired
-//    private FundDAO fundDAO;
 
     @Autowired
     UserDAO userDAO;
