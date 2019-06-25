@@ -1,13 +1,9 @@
 package com.example.portfolioservice.service;
 
 
-import java.util.*;
-
-import com.example.portfolioservice.DAO.FundDAO;
 import com.example.portfolioservice.DAO.UserDAO;
 import com.example.portfolioservice.models.*;
 import com.google.common.base.Optional;
-import org.immutables.mongo.repository.RepositorySetup;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
